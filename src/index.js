@@ -18,10 +18,13 @@ searchBox.addEventListener("input",event=>{
 })
 
 function getUrl(url,country){return new Promise((resolve, reject) => {
-    fetch (`${url}${country.value}`, {method:"GET"})
+    fetch (`${url}${country.value}`)
 
 .then((response)=>{
-    console.log(response.ok)
+    // console.log(response.ok)
+    if(response.ok===false){
+        Notiflix.Notify.failure('Oops, there is no country with that name"');
+    }
 return response.json()})
 .then((data)=>{
 
@@ -36,14 +39,31 @@ if(data.length > 10){
     Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
 }
 else{
-    for (var i=0; i<data.length; i++){
+    for (let i=0; i<data.length; i++){
+       const li=document.createElement('li');
+        if(data.length<2){
+            let img = document.createElement("img")
+            img.src = `${data[i].flags.svg}`
+            img.alt = `${data[i].flags.alt}`
+            img.classList.add("flag-elarge")
+            li.appendChild(img)
+            ul.appendChild(li);
+            li.innerHTML=li.innerHTML + data[i].name.official + data[i].capital
+             li.classList.add("li-enlarge")
+           
 
-        var li=document.createElement('li');
-    
-        ul.appendChild(li);
-        li.innerHTML=li.innerHTML + data[i].name.official; 
-    
-    }
-   }
-}
+            
+            
+
+        }
+   else{  
+    let img = document.createElement("img")
+   img.src = `${data[i].flags.svg}`
+   img.alt = `${data[i].flags.alt}`
+   img.classList.add("flag")
+   li.appendChild(img)
+   ul.appendChild(li);
+   li.innerHTML=li.innerHTML + data[i].name.official; 
+   
+} } }}
 

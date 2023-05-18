@@ -1,30 +1,32 @@
 import './css/styles.css';
-
+const _ = require('lodash');
 const DEBOUNCE_DELAY = 300;
-// import { create, reject } from 'lodash';
 import Notiflix from 'notiflix';
 const searchBox = document.querySelector("#search-box")
 const ul = document.querySelector(".country-list")
 const url = "https://restcountries.com/v3.1/name/"
 let country = searchBox
 let data = []
-searchBox.addEventListener("input",event=>{
+
+
+searchBox.addEventListener("input",_.debounce(()=>{
     getUrl(url,country) .then((data) => {
         console.log(data)
         ul.innerHTML = ""
         drawResults(data)
       }).catch((error)=> console.log("error"))
-         
-})
+         }, DEBOUNCE_DELAY))
+
 
 function getUrl(url,country){return new Promise((resolve, reject) => {
     fetch (`${url}${country.value}`)
-
 .then((response)=>{
     // console.log(response.ok)
+    
     if(response.ok===false){
         Notiflix.Notify.failure('Oops, there is no country with that name"');
     }
+   
 return response.json()})
 .then((data)=>{
 
@@ -48,10 +50,20 @@ else{
             img.classList.add("flag-elarge")
             li.appendChild(img)
             ul.appendChild(li);
-            li.innerHTML=li.innerHTML + data[i].name.official + data[i].capital
+            li.innerHTML=li.innerHTML + data[i].name.official 
              li.classList.add("li-enlarge")
-           
-
+             const li1=document.createElement('li');
+             ul.appendChild(li1);
+             li1.innerText=`Capital: ${data[i].capital}`
+             li1.classList.add("under")
+             const li2 = document.createElement('li');
+             ul.appendChild(li2)
+             li2.innerText=`Population ${data[i].population}`
+             li2.classList.add("under")
+             const li3 = document.createElement('li');
+             ul.appendChild(li3)
+             li3.classList.add("under")
+             li3.innerText=`Languages ${Object.values(data[i].languages)}`
             
             
 

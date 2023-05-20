@@ -51,18 +51,21 @@ else{
             ul.appendChild(li);
             li.innerHTML=li.innerHTML + data[i].name.official 
              li.classList.add("li-enlarge")
+             
              const li1=document.createElement('li');
-             ul.appendChild(li1);
-             li1.innerText=`Capital: ${data[i].capital}`
+             ul.appendChild(li1);   
+             li1.innerHTML=` Capital:<span style="font-weight:400">  ${data[i].capital}</span>`
              li1.classList.add("under")
+             
              const li2 = document.createElement('li');
              ul.appendChild(li2)
-             li2.innerText=`Population ${data[i].population}`
+             li2.innerHTML=` Population:<span style="font-weight:400"> ${data[i].population}</span>`
              li2.classList.add("under")
+             
              const li3 = document.createElement('li');
              ul.appendChild(li3)
              li3.classList.add("under")
-             li3.innerText=`Languages ${Object.values(data[i].languages)}`
+             li3.innerHTML=` Languages: <span style="font-weight:400">${Object.values(data[i].languages)}</span>`
                                 }
                                 
    else{  
